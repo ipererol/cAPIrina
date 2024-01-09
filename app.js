@@ -5,11 +5,14 @@ const YAML = require('yaml')
 const file = fs.readFileSync('./docs/openapi.yaml', 'utf8')
 const swaggerDocument = YAML.parse(file)
 const toXML = require('jstoxml')
+var cors = require('cors')
 
 const app = express();
 const port = 3000;
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(cors());
 
 app.get('/api/example/', (req, res) => {
     res.send("Hiciste un get desde la direccion " + req.socket.remoteAddress)
