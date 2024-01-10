@@ -5,17 +5,96 @@ info:
 servers:
   - url: http://localhost:3000
 paths:
-  /api:
+  /api/example:
     get:
-      operationId: listEndpoints
-      description: List API endpoints
+      operationId: basicExmple
+      description: API para mostrar en texto plano cual es tu IP
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hiciste un get desde la direccion ::1
+  /api/example/json:
+    get:
+      operationId: getJSON
+      description: Direccion para hacer get y que te devuelva un JSON
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/ReqInfo'
+    post:
+      operationId: postJSON
+      description: Direccion para hacer post y que te devuelva un JSON
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReqInfo'
+    put:
+      operationId: putJSON
+      description: Direccion para hacer put y que te devuelva un JSON
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReqInfo'
+    delete:
+      operationId: deleteJSON
+      description: Direccion para hacer delete y que te devuelva un JSON
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReqInfo'
 
+  /api/example/xml:
+    get:
+      operationId: getXML
+      description: Direccion para hacer get y que te devuelva un XML
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ReqInfo'
+    post:
+      operationId: postXML
+      description: Direccion para hacer post y que te devuelva un XML avisando de que no puedes postear
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+      
+components:
+  schemas:
+    ReqInfo:
+      type: object
+      properties:
+        headers:
+          type: object
+        params:
+          type: object
+        query:
+          type: object
+        body:
+          type: object
+          

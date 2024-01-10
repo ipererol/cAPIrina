@@ -10,11 +10,11 @@ var cors = require('cors')
 const app = express();
 const port = 3000;
 
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cors());
 
-app.get('/api/example/', (req, res) => {
+app.get('/api/example', (req, res) => {
     res.send("Hiciste un get desde la direccion " + req.socket.remoteAddress)
 })
 
@@ -82,8 +82,10 @@ app.post("/api/example/xml", (req, res) => {
     let response = {
         response: "u shall not pass"
     }
+    let xmlValue = '<?xml version="1.0" encoding="UTF-8"?><response>';
+    xmlValue += toXML.toXML(response) + '</response>';
     res.status(401)
-    res.json(response)
+    res.send(response)
 })
 
 app.delete("/api/example/xml", (req, res) => {
