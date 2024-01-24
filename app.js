@@ -94,6 +94,21 @@ app.delete("/api/example/xml", (req, res) => {
     res.sendFile("/opt/app/nggu2.gif")
 })
 
+app.get("/api/color", (req, res) => {
+    res.type("application/json")
+    res.status(200)
+    res.json({"color": generateColor()})
+})
+
 app.listen(port, () => {
     console.log("Server rdy & listening at http://localhost:" + port)
 })
+
+function generateColor() {
+    let result = ""
+    let code = "0123456789abcdef";
+    for(let i = 0; i<6;i++){
+        result += code.charAt(Math.random()*code.length)
+    }
+    return result;
+}
